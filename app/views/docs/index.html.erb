@@ -1,0 +1,27 @@
+<h1>Listing docs</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>User</th>
+    <th>Pad</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @docs.each do |doc| %>
+  <tr>
+    <td><%= doc.name %></td>
+    <td><%= doc.user_id %></td>
+    <td><%= doc.pad_id %></td>
+    <td><%= link_to 'Show', doc %></td>
+    <td><%= link_to 'Edit', edit_doc_path(doc) %></td>
+    <td><%= link_to 'Destroy', doc, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Doc', new_doc_path %>

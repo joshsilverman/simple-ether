@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @doc.name %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @doc.user_id %>
+</p>
+
+<p>
+  <b>Pad:</b>
+  <%= @doc.pad_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_doc_path(@doc) %> |
+<%= link_to 'Back', docs_path %>

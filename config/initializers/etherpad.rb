@@ -1,0 +1,1 @@
+ETHERPAD_SERVER_PATH = 'http://localhost:9000'

@@ -1,0 +1,57 @@
+<%= form_for(@doc) do |f| %>
+  <% if @doc.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@doc.errors.count, "error") %> prohibited this doc from being saved:</h2>
+
+      <ul>
+      <% @doc.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+
+  <%= f.hidden_field :pad_id %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<iframe name='ether' id='ether' style="border:none; width:100%;"></iframe>
+<script type="text/javascript">
+  function post_to_url(path, params, method) {
+      method = method || "post"; // Set method to post by default, if not specified.
+
+      // The rest of this code assumes you are not using a library.
+      // It can be made less wordy if you use one.
+      var form = document.createElement("form");
+      form.setAttribute("method", method);
+      form.setAttribute("action", path);
+      form.setAttribute("target", 'ether');
+
+      for(var key in params) {
+          var hiddenField = document.createElement("input");
+          hiddenField.setAttribute("type", "hidden");
+          hiddenField.setAttribute("name", key);
+          hiddenField.setAttribute("value", params[key]);
+
+          form.appendChild(hiddenField);
+      }
+
+      document.body.appendChild(form);    // Not entirely sure if this is necessary
+      form.submit();
+  }
+  document.observe("dom:loaded", function() {
+    <% if @is_new %>
+      post_to_url("<%= ETHERPAD_SERVER_PATH %>/ep/pad/create", {'padId': '<%= @doc.pad_id %>'}, "post")
+    <% else %>
+      document.getElementById("ether").src = "<%= ETHERPAD_SERVER_PATH + "/" + @doc.pad_id %>";
+    <% end %>
+  });
+</script>
