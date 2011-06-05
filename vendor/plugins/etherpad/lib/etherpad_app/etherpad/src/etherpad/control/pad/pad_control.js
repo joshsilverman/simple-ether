@@ -292,15 +292,15 @@ function _checkIfDeleted(pad) {
 
 function render_pad(localPadId) {
   var proTitle = null, documentBarTitle, initialPassword = null;
-  var isPro = isProDomainRequest();
+//  var isPro = isProDomainRequest();
   var userId = padusers.getUserId();
 
   var opts = {};
   var globalPadId;
 
-  if (isPro) {
-    pro_quotas.perRequestBillingCheck();
-  }
+//  if (isPro) {
+//    pro_quotas.perRequestBillingCheck();
+//  }
 
   padutils.accessPadLocal(localPadId, function(pad) {
     globalPadId = pad.getId();
@@ -322,13 +322,14 @@ function render_pad(localPadId) {
       displayName = assignName(pad, userId);
     }
 
-    if (isProDomainRequest()) {
-      pro_padmeta.accessProPadLocal(localPadId, function(propad) {
-        proTitle = propad.getDisplayTitle();
-        initialPassword = propad.getPassword();
-      });
-    }
-    documentBarTitle = (proTitle || "Public Pad");
+//    if (isProDomainRequest()) {
+//      pro_padmeta.accessProPadLocal(localPadId, function(propad) {
+//        proTitle = propad.getDisplayTitle();
+//        initialPassword = propad.getPassword();
+//      });
+//    }
+//    documentBarTitle = (proTitle || "Public Pad");
+    documentBarTitle = "";
 
     var specialKey = request.params.specialKey ||
       (sessions.isAnEtherpadAdmin() ? collab_server.getSpecialKey('invisible') :
@@ -357,7 +358,7 @@ function render_pad(localPadId) {
       accountPrivs: _getPrivs(),
       chatHistory: chatarchive.getRecentChatBlock(pad, 30),
       numConnectedUsers: collab_server.getNumConnections(pad),
-      isProPad: isPro,
+//      isProPad: isPro,
       initialTitle: documentBarTitle,
       initialPassword: initialPassword,
       initialOptions: pad.getPadOptionsObj(),
@@ -371,27 +372,31 @@ function render_pad(localPadId) {
     });
   });
 
-  var isProUser = (isPro && ! padusers.isGuest(userId));
+//  var isProUser = (isPro && ! padusers.isGuest(userId));
 
-  var isFullWidth = false;
-  var hideSidebar = false;
-  var cookiePrefs = padutils.getPrefsCookieData();
-  if (cookiePrefs) {
-    isFullWidth = !! cookiePrefs.fullWidth;
-    hideSidebar = !! cookiePrefs.hideSidebar;
-  }
-  if (opts.fullScreen) {
-    isFullWidth = true;
-    if (opts.tokbox) {
-      hideSidebar = true;
-    }
-  }
-  if ('sidebar' in opts) {
-    hideSidebar = ! opts.sidebar;
-  }
-  var bodyClass = (isFullWidth ? "fullwidth" : "limwidth")+
-    " "+(isPro ? "propad" : "nonpropad")+" "+
-    (isProUser ? "prouser" : "nonprouser");
+  var isFullWidth = true;
+  var hideSidebar = true;
+
+//  var isFullWidth = false;
+//  var hideSidebar = false;
+//  var cookiePrefs = padutils.getPrefsCookieData();
+//  if (cookiePrefs) {
+//    isFullWidth = !! cookiePrefs.fullWidth;
+//    hideSidebar = !! cookiePrefs.hideSidebar;
+//  }
+//  if (opts.fullScreen) {
+//    isFullWidth = true;
+//    if (opts.tokbox) {
+//      hideSidebar = true;
+//    }
+//  }
+//  if ('sidebar' in opts) {
+//    hideSidebar = ! opts.sidebar;
+//  }
+//  var bodyClass = (isFullWidth ? "fullwidth" : "limwidth")+
+//    " "+(isPro ? "propad" : "nonpropad")+" "+
+//    (isProUser ? "prouser" : "nonprouser");
+  var bodyClass = "fullwidth nonpropad nonprouser";
 
   var cookiePrefsToSet = {fullWidth:isFullWidth, hideSidebar:hideSidebar};
   helpers.addClientVars({cookiePrefsToSet: cookiePrefsToSet});
@@ -402,14 +407,16 @@ function render_pad(localPadId) {
               initialTitle:toHTML(documentBarTitle),
               bodyClass: bodyClass,
               hasOffice: hasOffice(),
-              isPro: isPro,
-              isProAccountHolder: isProUser,
+//              isPro: isPro,
+//              isProAccountHolder: isProUser,
+//              isPro: true,
+//              isProAccountHolder: true,
               account: getSessionProAccount(), // may be falsy
               toHTML: toHTML,
-              prefs: {isFullWidth:isFullWidth, hideSidebar:hideSidebar},
-              signinUrl: '/ep/account/sign-in?cont='+
-                encodeURIComponent(request.url),
-              fullSuperdomain: pro_utils.getFullSuperdomainHost()
+              prefs: {isFullWidth:isFullWidth, hideSidebar:hideSidebar}//,
+//              signinUrl: '/ep/account/sign-in?cont='+
+//                encodeURIComponent(request.url),
+//              fullSuperdomain: pro_utils.getFullSuperdomainHost()
              });
   return true;
 }

@@ -1,6 +1,7 @@
-#require 'etherpad/acts_as_pad'
 
-#ETHERPAD_SERVER_PATH = 'http://localhost:9000'
+# run etherpad
+run_ep_cmd = "cd #{RAILS_ROOT}/vendor/plugins/etherpad/lib/etherpad_app/etherpad; bin/run-local.sh"
+exec(run_ep_cmd) if fork.nil?
 
 class ActiveRecord::Base
   extend Etherpad

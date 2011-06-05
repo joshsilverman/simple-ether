@@ -40,8 +40,6 @@ var padeditor = (function(){
       // view bar
       self.initViewZoom();
       $("#viewbarcontents").show();
-
-      setTimeout("clearauthorship();", 250);
     },
     initViewOptions: function() {
       padutils.bindCheckboxChange($("#options-linenoscheck"), function() {
@@ -67,11 +65,11 @@ var padeditor = (function(){
       var v;
 
       v = getOption('showLineNumbers', true);
-      self.ace.setProperty("showslinenumbers", false);
+      self.ace.setProperty("showslinenumbers", v);
       padutils.setCheckbox($("#options-linenoscheck"), v);
 
       v = getOption('showAuthorColors', true);
-      self.ace.setProperty("showsauthorcolors", true);
+      self.ace.setProperty("showsauthorcolors", v);
       padutils.setCheckbox($("#options-colorscheck"), v);
 
       v = getOption('useMonospaceFont', false);

@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-import("etherpad.helpers");
-import("etherpad.pad.model");
-import("etherpad.pad.padusers");
+//import("etherpad.helpers");
+//import("etherpad.pad.model");
+//import("etherpad.pad.padusers");
 import("etherpad.pad.padutils");
-import("etherpad.pad.exporthtml");
-import("etherpad.pro.pro_accounts");
-import("etherpad.pro.pro_padmeta");
+//import("etherpad.pad.exporthtml");
+//import("etherpad.pro.pro_accounts");
+//import("etherpad.pro.pro_padmeta");
 import("etherpad.utils.*");
 import("etherpad.pad.revisions");
-import("stringutils.toHTML");
+//import("stringutils.toHTML");
 import("etherpad.collab.server_utils.*");
-import("etherpad.collab.collab_server.buildHistoricalAuthorDataMapForPadHistory");
+//import("etherpad.collab.collab_server.buildHistoricalAuthorDataMapForPadHistory");
 import("etherpad.collab.collab_server.getATextForWire");
 import("etherpad.control.pad.pad_changeset_control.getChangesetInfo");
-import("etherpad.globals");
-import("fastJSON");
+//import("etherpad.globals");
+//import("fastJSON");
 import("etherpad.collab.ace.easysync2.Changeset");
 import("etherpad.collab.ace.linestylefilter.linestylefilter");
 import("etherpad.collab.ace.domline.domline");
@@ -141,60 +141,63 @@ function onRequest() {
     var documentBarTitle = (proTitle || "Public Pad");
 
     var padHTML = padContents[0];
-    var padText = padContents[1];
+//    var padText = padContents[1];
 
-    var historicalAuthorData = padutils.accessPadLocal(localPadId, function(pad) {
-      return buildHistoricalAuthorDataMapForPadHistory(pad);
-    }, 'r');
+    response.setContentType('text/html; charset=utf-8');
+    response.write(padHTML);
 
-    helpers.addClientVars({
-      viewId: viewId,
-      initialPadContents: padText,
-      revNum: rev.revNum,
-      totalRevs: totalRevs,
-      initialChangesets: initialChangesets,
-      initialStyledContents: atextForWire,
-      savedRevisions: savedRevisions,
-      currentTime: rev.timestamp,
-      sliderEnabled: (!appjet.cache.killSlider) && request.params.slider != 0,
-      supportsSlider: supportsSlider,
-      historicalAuthorData: historicalAuthorData,
-      colorPalette: globals.COLOR_PALETTE,
-      padIdForUrl: readOnlyIdOrLocalPadId,
-      fullWidth: request.params.fullScreen == 1,
-      disableRightBar: request.params.sidebar == 0,
-    });
+//    var historicalAuthorData = padutils.accessPadLocal(localPadId, function(pad) {
+//      return buildHistoricalAuthorDataMapForPadHistory(pad);
+//    }, 'r');
+//
+//    helpers.addClientVars({
+//      viewId: viewId,
+//      initialPadContents: padText,
+//      revNum: rev.revNum,
+//      totalRevs: totalRevs,
+//      initialChangesets: initialChangesets,
+//      initialStyledContents: atextForWire,
+//      savedRevisions: savedRevisions,
+//      currentTime: rev.timestamp,
+//      sliderEnabled: (!appjet.cache.killSlider) && request.params.slider != 0,
+//      supportsSlider: supportsSlider,
+//      historicalAuthorData: historicalAuthorData,
+//      colorPalette: globals.COLOR_PALETTE,
+//      padIdForUrl: readOnlyIdOrLocalPadId,
+//      fullWidth: request.params.fullScreen == 1,
+//      disableRightBar: request.params.sidebar == 0,
+//    });
 
-    var userId = padusers.getUserId();
-    var isPro = isProDomainRequest();
-    var isProUser = (isPro && ! padusers.isGuest(userId));
+//    var userId = padusers.getUserId();
+//    var isPro = isProDomainRequest();
+//    var isProUser = (isPro && ! padusers.isGuest(userId));
 
-    var bodyClass = ["limwidth",
-                     (isPro ? "propad" : "nonpropad"),
-                     (isProUser ? "prouser" : "nonprouser")].join(" ");
+//    var bodyClass = ["limwidth",
+//                     (isPro ? "propad" : "nonpropad"),
+//                     (isProUser ? "prouser" : "nonprouser")].join(" ");
 
-    renderHtml("pad/padview_body.ejs", {
-      bodyClass: bodyClass,
-      isPro: isPro,
-      isProAccountHolder: isProUser,
-      account: pro_accounts.getSessionProAccount(),
-      signinUrl: '/ep/account/sign-in?cont='+
-        encodeURIComponent(request.url),
-      padId: readOnlyIdOrLocalPadId,
-      padTitle: documentBarTitle,
-      rlabel: rev.label,
-      padHTML: padHTML,
-      padText: padText,
-      savedBy: rev.savedBy,
-      savedIp: rev.ip,
-      savedWhen: rev.timestamp,
-      toHTML: toHTML,
-      revisionId: revisionId,
-      dateFormat: dateFormat(rev.timestamp),
-      readOnly: isReadOnly,
-      roPadId: roPadId,
-      hasOffice: hasOffice()
-    });
+//    renderHtml("pad/padview_body.ejs", {
+//      bodyClass: bodyClass,
+//      isPro: isPro,
+//      isProAccountHolder: isProUser,
+//      account: pro_accounts.getSessionProAccount(),
+//      signinUrl: '/ep/account/sign-in?cont='+
+//        encodeURIComponent(request.url),
+//      padId: readOnlyIdOrLocalPadId,
+//      padTitle: documentBarTitle,
+//      rlabel: rev.label,
+//      padHTML: padHTML,
+//      padText: padText,
+//      savedBy: rev.savedBy,
+//      savedIp: rev.ip,
+//      savedWhen: rev.timestamp,
+//      toHTML: toHTML,
+//      revisionId: revisionId,
+//      dateFormat: dateFormat(rev.timestamp),
+//      readOnly: isReadOnly,
+//      roPadId: roPadId,
+//      hasOffice: hasOffice()
+//    });
   }
 
   return true;

@@ -27,6 +27,7 @@ class DocsController < ApplicationController
   def new
     @doc = Doc.new
     @doc.pad_id = Doc.next_pad_id
+    @doc.name = @doc.pad_id
     @doc.save
     @is_new = true
 

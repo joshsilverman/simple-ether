@@ -70,8 +70,35 @@ limitations under the License. */ %>
 <div id="padpage">
 
 <div id="padtop">
-
-
+  <div id="topbar">
+    <% /* floated left */ %>
+    <div id="topbarleft"><!-- --></div>
+    <% /* <a href="#" id="topbarnewpad">New Pad</a> */ %>
+    <% /* floated right */ %>
+    <div id="topbarright"><!-- --></div>
+    <% /* <a href="#" id="topbarfullwidth">Toggle Width</a> */ %>
+    <% /* non-floated */ %>
+    <div id="topbarcenter">
+      <a href="/" id="topbaretherpad">EtherPad</a>
+    </div>
+<% if (isProAccountHolder) { %>          
+    <a id="backtoprosite" href="/ep/padlist/">Return to pad list</a>
+    <div id="accountnav"><%= toHTML(account.email) %>
+      <a href="/ep/account/sign-out">(sign out)</a>
+    </div>
+<% } else if (isPro) { %>
+    <div id="accountnav">
+      <a href="<%= signinUrl %>">sign in</a>
+    </div>
+<% } %>
+    <div id="specialkeyarea"><!-- --></div>
+  </div>
+<!--
+  <div id="shuttingdown">
+    <strong style="color:red">Note: EtherPad.com is shutting down March 31, 2010.</strong>
+    <a href="http://<%= fullSuperdomain %>/ep/blog/posts/google-acquires-appjet">(more info)</a>
+  </div>
+  -->
   <div id="alertbar">
     <div id="servermsg">
       <h3>Server Notice<span id="servermsgdate"><!-- --></span>:</h3>
@@ -82,11 +109,19 @@ limitations under the License. */ %>
 
   <div id="docbar">
     <div id="docbarleft"><!-- --></div>
+    <div id="docbarpadtitle"><span><%= initialTitle %></span></div>
+<% if (isProAccountHolder) { %>          
+    <div id="docbarsecurity-outer"><a href="javascript:void(0)" id="docbarsecurity">Security</a></div>
+<% } /* isProAccountHolder */ %>
     <div id="docbaroptions-outer"><a href="javascript:void(0)" id="docbaroptions">Pad Options</a></div>
     <div id="docbarsavedrevs-outer"><a href="javascript:void(0)" id="docbarsavedrevs">Saved revisions</a></div>
     <div id="docbarimpexp-outer"><a href="javascript:void(0)" id="docbarimpexp">Import/Export</a></div>
-    <div id="docbarright"><!-- --></div>
-
+    <div id="docbarslider-outer"><a target="_blank" href="/ep/pad/view/<%= localPadId %>/latest" id="docbarslider">Time Slider</a></div>
+<% if (isProAccountHolder) { %>          
+    <div id="docbarrenamelink">
+      <a href="javascript:void(0)">(rename)</a>
+    </div>
+<% } /* isProAccountHolder */ %>
     <input type="text" id="padtitleedit"/>
     <div id="padtitlebuttons">
       <a id="padtitlesave" href="javascript:void(0)">Save</a>
@@ -196,6 +231,47 @@ limitations under the License. */ %>
         </div>
       </div>
     </div><!-- /options-wrapper -->
+<% if (isProAccountHolder) { %>          
+    <div id="security-wrapper" class="dbpanel-wrapper">
+      <div id="security-panel" class="dbpanel-panel">
+        <div class="dbpanel-leftedge"><!-- --></div>
+        <div class="dbpanel-rightedge"><!-- --></div>
+        <div class="dbpanel-botleftcorner"><!-- --></div>
+        <div class="dbpanel-botrightcorner"><!-- --></div>
+        <div class="dbpanel-middle">
+          <div class="dbpanel-inner">
+            <div class="dbpanel-top"><!-- --></div>
+          </div>
+          <div class="dbpanel-bottom"><!-- --></div>
+        </div>
+        <div id="padsecurity">
+          <div id="security-access">
+            <div id="security-accesshead">Pad Access:</div>
+            <input type="radio" name="padaccess" id="access-private" value="deny"/>
+            <label for="access-private" id="access-private-label"><strong>Private</strong> (Team account-holders only)</label>
+            <input type="radio" name="padaccess" id="access-public" value="allow"/>
+            <label for="access-public" id="access-public-label"><strong>Public</strong> (Allow Internet guests)</label>
+          </div>
+          <div id="security-password">
+            <div id="security-passhead">Password:</div>
+            <div id="security-passbody">
+              <div class="nopassword" id="password-nonedit">
+                <div id="password-display">None</div>
+                <a href="javascript:void(0)" id="password-setlink">Set...</a>
+                <a href="javascript:void(0)" id="password-clearlink">Clear</a>
+                </div>
+              <div id="password-inedit">
+                <a href="javascript:void(0)" id="password-savelink">Save</a>
+                <a href="javascript:void(0)" id="password-cancellink">Cancel</a>
+                <input type="text" id="security-passwordedit" maxlength="31" />
+              </div>
+            </div>
+          </div>
+          <a id="security-close" href="javascript:void(0)">Hide</a>
+        </div>
+      </div>
+    </div><!-- /security-wrapper -->
+<% } /* isProAccountHolder */ %>
   </div><!-- /docbar -->
 </div>
 
@@ -351,8 +427,25 @@ limitations under the License. */ %>
     <div id="feedbackbox-bl"><!-- --></div>
     <div id="feedbackbox-br"><!-- --></div>
     <div id="feedbackbox-back"><!-- --></div>
-
-
+<%/*    <a href="javascript:void(0)" id="feedbackbox-send"><!-- --></a>
+    <input type="text" id="feedbackbox-email" class="modalfield" />
+    <textarea id="feedbackbox-message" rows="6" cols="40" class="modalfield"></textarea>
+    <div id="feedbackbox-response"><!-- --></div>*/%>
+    <div id="feedbackbox-contents">
+      <div id="feedbackbox-contentsinner">
+        <p><strong>Great, we love feedback!  What kind?</strong></p>
+        <ul id="uservoicelinks">
+          <li><a href="http://uservoice.etherpad.com/pages/17280-feature-requests" target="_blank">Feature Request</a></li>
+          <li><a href="http://uservoice.etherpad.com/pages/17285-bugs-and-problems" target="_blank">Bug Report</a></li>
+          <li><a href="http://uservoice.etherpad.com/pages/22732-how-are-you-using-etherpad-" target="_blank">How I'm Using It</a></li>
+          <li><a href="http://uservoice.etherpad.com/pages/22751-general-questions" target="_blank">Other Question</a></li>
+          <li><a href="http://uservoice.etherpad.com/pages/22733-general-feedback" target="_blank">Other Feedback</a></li>
+        </ul>
+        <p>These links will open UserVoice in a new window.</p>
+        <p id="feedbackemails">You can also send email to <a href="feedback"><tt>feedback</tt></a>, <a href="support"><tt>support</tt></a>, or <a href="bugs"><tt>bugs</tt></a> at <tt>etherpad.com</tt>.</p>
+      </div>
+    </div>
+    <a href="javascript:void(0)" id="feedbackbox-hide"><!-- --></a>
   </div>
   <div id="sharebox">
     <div id="sharebox-inner">

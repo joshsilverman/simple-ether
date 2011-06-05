@@ -37,20 +37,20 @@ var pad = {
   resizeInited: false,
 
   // these don't require init; clientVars should all go through here
-  getPadId: function() {return clientVars.padId;},
-  getClientIp: function() {return clientVars.clientIp;},
-  getIsProPad: function() {return clientVars.isProPad;},
-  getColorPalette: function() {return clientVars.colorPalette;},
+  getPadId: function() { return clientVars.padId; },
+  getClientIp: function() { return clientVars.clientIp; },
+  getIsProPad: function() { return clientVars.isProPad; },
+  getColorPalette: function() { return clientVars.colorPalette; },
   getDisplayUserAgent: function() {
     return padutils.uaDisplay(clientVars.userAgent);
   },
-  getIsDebugEnabled: function() {return clientVars.debugEnabled;},
-  getPrivilege: function(name) {return clientVars.accountPrivs[name];},
-  getUserIsGuest: function() {return clientVars.userIsGuest;},
+  getIsDebugEnabled: function() { return clientVars.debugEnabled; },
+  getPrivilege: function(name) { return clientVars.accountPrivs[name]; },
+  getUserIsGuest: function() { return clientVars.userIsGuest; },
   //
 
-  getUserId: function() {return pad.myUserInfo.userId;},
-  getUserName: function() {return pad.myUserInfo.name;},
+  getUserId: function() { return pad.myUserInfo.userId; },
+  getUserName: function() { return pad.myUserInfo.name; },
   sendClientMessage: function(msg) {
     pad.collabClient.sendClientMessage(msg);
   },
@@ -60,7 +60,7 @@ var pad = {
     pad.resizeInited = true;
     pad.resizePage();
     // just in case, periodically check size:
-    setInterval(function() {pad.resizePage();}, 2000);
+    setInterval(function() { pad.resizePage(); }, 2000);
   },
   init: function() {
     pad.diagnosticInfo.uniqueId = padutils.uniqueId();
@@ -121,7 +121,7 @@ var pad = {
       getCollabClient(padeditor.ace,
                       clientVars.collab_client_vars,
                       pad.myUserInfo,
-                      {colorPalette: pad.getColorPalette()});
+                      { colorPalette: pad.getColorPalette() });
     pad.collabClient.setOnUserJoin(pad.handleUserJoin);
     pad.collabClient.setOnUpdateUserInfo(pad.handleUserUpdate);
     pad.collabClient.setOnUserLeave(pad.handleUserLeave);
@@ -132,7 +132,7 @@ var pad = {
 
     function postAceInit() {
       padeditbar.init();
-      setTimeout(function() {padeditor.ace.focus();}, 0);
+      setTimeout(function() { padeditor.ace.focus(); }, 0);
     }
 
     pad.resizePage();
@@ -325,7 +325,7 @@ var pad = {
       pad.diagnosticInfo.disconnectedMessage = message;
       pad.diagnosticInfo.padInitTime = pad.initTime;
       pad.asyncSendDiagnosticInfo();
-      if (typeof window.ajlog == "string") {window.ajlog += ("Disconnected: "+message+'\n');}
+      if (typeof window.ajlog == "string") { window.ajlog += ("Disconnected: "+message+'\n'); }
       padeditor.disable();
       padeditbar.disable();
       paddocbar.disable();
@@ -446,7 +446,7 @@ var pad = {
   },
   addHistoricalAuthors: function(data) {
     if (! pad.collabClient) {
-      window.setTimeout(function() {pad.addHistoricalAuthors(data);},
+      window.setTimeout(function() { pad.addHistoricalAuthors(data); },
                         1000);
     }
     else {
